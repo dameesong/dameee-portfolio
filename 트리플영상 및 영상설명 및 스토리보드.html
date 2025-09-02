@@ -276,9 +276,13 @@
 
   <!-- 모달 팝업 -->
   <div class="modal" id="videoModal">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    <video id="promoVideo" src="https://www.youtube.com/embed/Zrdnh0tedeY?si=eyv0T10sh4nMdmjT"  controls></video>
-  </div>
+  <span class="close-btn" onclick="closeModal()">&times;</span>
+  <iframe id="promoVideo" width="560" height="315"
+    src="https://www.youtube.com/embed/Zrdnh0tedeY?si=eyv0T10sh4nMdmjT"
+    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
 
   <script>
     
