@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>트리플 앱 홍보영상</title>
+  <style>
+    body { 
+  overflow-x: hidden;
+
+      margin: 0;
+      font-family: 'Noto Sans', sans-serif;
+      background: rgba(50,50,50,0.9); /* 회색 베이스 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+      position: relative;
+      backdrop-filter: blur(10px); /* 유리 느낌 */
+    }
+
+    .portfolio-circle {
+      position: absolute;
+      top: 150px;
+      left: 410px;
+      width: 120px;
+      height: 25px;
+      border-radius: 50px;
+      display: flex;
+      overflow: hidden;
+      border: 1px solid white;
+      font-size: 14px;
+      font-weight: 300;
+      color: white;
+      z-index: 10;
+    }
+
+    .portfolio-number {
+      background-color: white;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+      border-radius: 30px;
+    }
+
+    .portfolio-text {
+      flex: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-section {
+      max-width: 1100px;
+      display: flex;
+      gap: 25px;
+      align-items: flex-start;
+      margin-top: 200px;
+    }
+
+    .video-info {
+      flex: 1;
+      position: relative;
+    }
+
+    .video-info h1 {
+      font-size: 50px;
+      font-weight: 900;
+      margin-top: 0;
+      margin-bottom: 250px; 
+      line-height: 1.2;
+    }
+
+    .text-group {
+      position: relative;
+      top: -160px; 
+    }
+
+    .video-info p {
+      margin: 8px 0;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .highlight {
+      color: #ff4d6d;
+      font-weight: bold;
+    }
+
+    .thumbnail {
+      flex: 1;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s;
+      z-index: 1;margin-top:75px; 
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.03);
+    }
+
+    .thumbnail img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal.active {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 세로 정렬을 상단으로 */
+  padding-top: 50px;       /* 모달이 화면 위쪽에서 조금 떨어지게 */
+}
+
+    .modal video {
+      width: 80%;
+      max-width: 960px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 50px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .program-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .program-logo {
+  /* width: 40px; 제거 */
+  height: 40px;                 /* 높이는 그대로 */
+  padding: 0 12px;              /* 양옆 여백으로 텍스트 여유 확보 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+  background: transparent;
+  cursor: default;
+}
+
+    .storyboard-section {
+  background: rgba(50,50,50,0.9);
+  padding: 80px 350px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열 */
+  gap: 20px;
+  justify-items: center; /* 중앙 정렬 */
+}
+.scroll-btn {
+  display: inline-block;        /* 텍스트 크기만큼 상자 */
+  padding: 4px 10px;           /* 상자 안 여백 */
+  background-color: #ffffff;    /* 배경 색 */
+  color: rgb(165, 163, 163);                 /* 글자 색 */
+  font-weight: bold;
+  border-radius: 8px;           /* 모서리 둥글게 */
+  cursor: pointer;
+  margin-top: 15px;
+  
+}
+
+.scroll-btn:hover {
+  background-color: #313131;    /* 호버 색상 */
+  transform: translateY(-2px);  /* 살짝 올라가는 효과 */
+}
+
+.storyboard-section img {
+  width: 400px;   /* 이미지 너비 증가 */
+  height: 250px;  /* 이미지 높이 증가 */
+  object-fit: cover; /* 영역 꽉차도록 */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4); /* 그림자 조금 더 뚜렷하게 */
+}
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 8px 14px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 2000;
+  
+}
+
+.back-btn:hover {
+  background-color: #ff4d6d;
+  color: white;
+  transform: translateY(-2px);
+}
+.before-after-section {
+  padding: 150px 20px;
+  text-align: center;
+  background: rgba(30,30,30,0.9);
+  width: 100vw;       /* 화면 전체 폭 */
+  margin-left: 0;      /* 혹시 남은 여백 제거 */
+  margin-right: 0;
+  box-sizing: border-box; /* 패딩 포함 폭 계산 */
+}
+
+
+.before-after-container {
+  display: flex;
+  gap: 20px;         /* 두 영상 사이 간격 */
+  justify-content: center;
+  flex-wrap: wrap;    /* 작은 화면에서는 세로로 정렬 */
+}
+
+.before-after-container video {
+  width: 480px;
+  max-width: 90%;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.before-after-container video:hover {
+  transform: scale(1.03);
+}
+.improvement-notes {
+  margin-top: 40px;
+  text-align: left;
+  color: #fff;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(50, 50, 50, 0.95);
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
+.improvement-notes h3 {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #ff4d6d;
+  text-align: center;
+  font-weight: 900;
+}
+
+.improvement-notes ul {
+  list-style: none; /* 기존 점 제거 */
+  padding-left: 0;
+}
+
+.improvement-notes ul li {
+  font-size: 1.25rem;
+  line-height: 2;
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 25px; /* v 아이콘 공간 확보 */
+}
+
+.improvement-notes ul li::before {
+  content: "v"; 
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ff4d6d;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.side-navigator {
+  position: fixed;
+  top: 50%;
+  right: 20px; /* 화면 오른쪽 끝에서 20px */
+  transform: translateY(-50%);
+  background: rgba(20,20,20,0.8);
+  padding: 15px 10px;
+  border-radius: 12px;
+  z-index: 3000;
+}
+html {
+  scroll-behavior: smooth;
+}
+.side-navigator ul {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.side-navigator ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+ 
+}
+
+.side-navigator ul li a:hover {
+  background: #ff4d6d;
+}
+  </style>
+</head>
+<body>
+    <nav class="side-navigator">
+        <ul>
+          <li><a href="#video-section">1</a></li>
+          <li><a href="#storyboard">2</a></li>
+          <li><a href="#before-after">3</a></li>
+          
+        </ul>
+      </nav>
+  
+    <button class="back-btn" onclick="goBack()">← 이전으로</button>
+  <div class="portfolio-circle">
+      <span class="portfolio-number">team</span>
+      <span class="portfolio-text">portfolio</span>
+  </div>
+
+  <div class="video-section"id="video-section">
+    <!-- 왼쪽 설명 -->
+    <div class="video-info">
+      <h1>3D로 구현한<br> 케이팝데몬헌터스 'Golden' 음악방송 무대 </h1>
+
+      <div class="text-group">
+        <p><span class="highlight">Concept</span> <br>
+            넷플릭스 애니메이션 케이팝 데몬 헌터스의 캐릭터 ‘헌트릭스’를 리모델링하였고, <br>AI 모션 캡처 기술을 활용해 캐릭터와 안무를 사실적으로 구현했습니다.  <br>
+            <br>음악방송 무대구성과 카메라 워킹을 적용하여 <br>현장감을 더했습니다.</p>
+            <p><span class="highlight">기획의도</span> <br>이번 프로젝트는 캐릭터를 단순히 재현하는 것을 넘어, ‘헌트릭스’를 저희 팀만의 <br>색깔로 재해석하는 데 의의를 두었습니다. 
+                <br><br>AI 모션 캡처를 통해 안무와 퍼포먼스를 사실적으로 구현하고,
+                <br>곡 Golden의 분위기에 맞춘 무대 디자인과 카메라 워킹을 적용하여 관객이<br> 실제 음악방송 무대를 보는 듯한 생생한 현장감을 전달하고자 했습니다. </p>
+        <p><span class="highlight">참여인원</span> 4명 (송다미, 이재우, 김민서, 나호영)</p>
+        <p><span class="highlight">주요 역할</span> 캐릭터 및 무대 모델링, 캐릭터 리깅, 카메라워킹, 후반작업</p>
+        <p><span class="highlight">작업기간</span> 약 1달 </p>
+        <div class="program-logos-section">
+            <span class="highlight">사용 프로그램</span>
+            <div class="program-logos">
+    
+              <div class="program-logo">Ae</div>
+              <div class="program-logo">Pr</div>
+              <div class="program-logo">Blender</div>
+              <div class="program-logo">Deepmotion</div>
+            </div>
+          
+            <!-- 스토리보드 보러가기 버튼 이동 -->
+            <br> <br> <br> <p class="scroll-btn" onclick="scrollToStoryboard()">미리보기 ⬇</p>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- 오른쪽 썸네일 -->
+    <div class="thumbnail" onclick="openModal()">
+      <img src="케데몬 제출용 썸네일.JPG" alt="트리플 앱 홍보영상 썸네일">
+    </div>
+  </div>
+
+  <!-- 스토리보드 섹션 -->
+  <div class="storyboard-section"id="storyboard">
+    <img src="포폴5.케이팝데몬 헌터스 골든 음방무대0826 (0-00-05-27).png" alt="스토리보드 1">
+    <img src="포폴5.케이팝데몬 헌터스 골든 음방무대0826 (0-00-07-14).png" alt="스토리보드 2">
+    <img src="포폴5.케이팝데몬 헌터스 골든 음방무대0826 (0-00-27-01).png"  alt="스토리보드 3">
+    <img src="포폴5.케이팝데몬 헌터스 골든 음방무대0826 (0-00-58-14).png" alt="스토리보드 4">
+    <img src="포폴5.케이팝데몬 헌터스 골든 음방무대0826 (0-01-01-03).png" alt="스토리보드 5">
+    
+  </div>
+
+  <!-- 모달 팝업 -->
+  <div class="modal" id="videoModal">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <video id="promoVideo" src="포폴5.케이팝데몬 헌터스 골든 음방무대0826.mp4" controls></video>
+  </div>
+  <section class="before-after-section"id="before-after">
+    <h2>Before / After</h2>
+  
+    <div class="before-after-container">
+      <video id="beforeVideo" src="0821.mp4" controls></video>
+      <video id="afterVideo" src="포폴5.케이팝데몬 헌터스 골든 음방무대0826.mp4" controls></video>
+    </div>
+    <div class="improvement-notes">
+        <h3>Problems</h3>
+        <ul>
+          <li>캐릭터 모션 디테일 보완 (세부 키프레임 수정 및 캐릭터 추가 리모델링) </li>
+          <li>조명과 색감 조정을 통해 무대 분위기 강화</li>
+          <li>카메라 워킹 일부 부드럽게 수정 </li>
+          
+         
+        </ul>
+    
+  </section>
+  
+  
+  <script>
+    const modal = document.getElementById('videoModal');
+    const video = document.getElementById('promoVideo');
+
+   
+  function openModal() {
+    modal.classList.add('active');
+    video.play();
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    video.pause();
+    video.currentTime = 0;
+  }
+
+  // 스토리보드로 스크롤 이동
+  function scrollToStoryboard() {
+    const storyboard = document.getElementById('storyboard');
+    storyboard.scrollIntoView({ behavior: 'smooth' });
+  }
+  function goBack() {
+    if (history.length > 1) {
+      history.back(); // 브라우저 기록이 있으면 이전 페이지
+    } else {
+      // 기록이 없으면 특정 페이지로 이동
+      window.location.href = 'index.html';
+    }
+  }
+  </script>
+</body>
+</html>

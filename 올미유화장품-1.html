@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>트리플 앱 홍보영상</title>
+  <style>
+    body { 
+  overflow-x: hidden;
+
+      margin: 0;
+      font-family: 'Noto Sans', sans-serif;
+      background: rgba(50,50,50,0.9); /* 회색 베이스 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+      position: relative;
+      backdrop-filter: blur(10px); /* 유리 느낌 */
+    }
+
+    .portfolio-circle {
+      position: absolute;
+      top: 150px;
+      left: 410px;
+      width: 120px;
+      height: 25px;
+      border-radius: 50px;
+      display: flex;
+      overflow: hidden;
+      border: 1px solid white;
+      font-size: 14px;
+      font-weight: 300;
+      color: white;
+      z-index: 10;
+    }
+
+    .portfolio-number {
+      background-color: white;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+      border-radius: 30px;
+    }
+
+    .portfolio-text {
+      flex: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-section {
+      max-width: 1100px;
+      display: flex;
+      gap: 25px;
+      align-items: flex-start;
+      margin-top: 200px;
+    }
+
+    .video-info {
+      flex: 1;
+      position: relative;
+    }
+
+    .video-info h1 {
+      font-size: 50px;
+      font-weight: 900;
+      margin-top: 0;
+      margin-bottom: 250px; 
+      line-height: 1.2;
+    }
+
+    .text-group {
+      position: relative;
+      top: -160px; 
+    }
+
+    .video-info p {
+      margin: 8px 0;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .highlight {
+      color: #ff4d6d;
+      font-weight: bold;
+    }
+
+    .thumbnail {
+      flex: 1;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s;
+      z-index: 1;margin-top:75px; 
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.03);
+    }
+
+    .thumbnail img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal video {
+      width: 80%;
+      max-width: 960px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 50px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .program-logos {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .program-logo {
+  /* width: 40px; 제거 */
+  height: 40px;                 /* 높이는 그대로 */
+  padding: 0 12px;              /* 양옆 여백으로 텍스트 여유 확보 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+  background: transparent;
+  cursor: default;
+}
+    .storyboard-section {
+  background: rgba(50,50,50,0.9);
+  padding: 80px 350px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열 */
+  gap: 20px;
+  justify-items: center; /* 중앙 정렬 */
+}
+.scroll-btn {
+  display: inline-block;        /* 텍스트 크기만큼 상자 */
+  padding: 4px 10px;           /* 상자 안 여백 */
+  background-color: #ffffff;    /* 배경 색 */
+  color: rgb(165, 163, 163);                 /* 글자 색 */
+  font-weight: bold;
+  border-radius: 8px;           /* 모서리 둥글게 */
+  cursor: pointer;
+  margin-top: 15px;
+  
+}
+
+.scroll-btn:hover {
+  background-color: #313131;    /* 호버 색상 */
+  transform: translateY(-2px);  /* 살짝 올라가는 효과 */
+}
+
+.storyboard-section img {
+  width: 400px;   /* 이미지 너비 증가 */
+  height: 250px;  /* 이미지 높이 증가 */
+  object-fit: cover; /* 영역 꽉차도록 */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4); /* 그림자 조금 더 뚜렷하게 */
+}
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 8px 14px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 2000;
+  
+}
+
+.modal.active {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 세로 정렬을 상단으로 */
+  padding-top: 50px;       /* 모달이 화면 위쪽에서 조금 떨어지게 */
+}
+.back-btn:hover {
+  background-color: #ff4d6d;
+  color: white;
+  transform: translateY(-2px);
+}
+  </style>
+</head>
+<body>
+  <button class="back-btn" onclick="goBack()">← 이전으로</button>
+  <div class="portfolio-circle">
+      <span class="portfolio-number">04</span>
+      <span class="portfolio-text">portfolio</span>
+  </div>
+
+  <div class="video-section">
+    <!-- 왼쪽 설명 -->
+    <div class="video-info">
+      <h1>자체제작 코스매틱 브랜드 'allmeyou' 립제품 광고 <br></h1>
+
+      <div class="text-group">
+        <p><span class="highlight">About</span> <br>
+            립틴트, 립펜슬, 패키지 박스 등 전 제품을 3D로 모델링하고, <br> 텍스처와 컬러감을 실제 제품과 유사하게 재현했습니다. 
+            <br>카메라 무빙을 적용하여 광고 영상처럼 제품의 디테일과 질감을 생동감 있게 담아낸 영상입니다.
+
+        <p><span class="highlight">참여인원:</span> 1명 </p>
+        <p><span class="highlight">주요 역할:</span>  제품 모델링, 카메라워킹, 편집, 사운드</p>
+        <p><span class="highlight">작업기간:</span> 약 1달 </p>
+        <div class="program-logos-section">
+            <span class="highlight">사용 프로그램</span>
+            <div class="program-logos">
+              <div class="program-logo">Ae</div>
+              <div class="program-logo">Ps</div>
+              <div class="program-logo">Blender</div>
+              
+            </div>
+          
+            <!-- 스토리보드 보러가기 버튼 이동 -->
+            <br> <br> <br> <p class="scroll-btn" onclick="scrollToStoryboard()">미리보기 ⬇</p>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- 오른쪽 썸네일 -->
+    <div class="thumbnail" onclick="openModal()">
+      <img src="Comp 1 (0-00-33-28).png" alt="하트시그널 썸네일">
+    </div>
+  </div>
+
+  <!-- 스토리보드 섹션 -->
+  <div class="storyboard-section"id="storyboard">
+    <img src="Comp 1 (0-00-05-10).png" alt="스토리보드 1">
+    <img src="Comp 1 (0-00-18-15).png" alt="스토리보드 2">
+    <img src="Comp 1 (0-00-20-22).png" alt="스토리보드 3">
+    <img src="Comp 1 (0-00-27-01).png" alt="스토리보드 4">
+    <img src="Comp 1 (0-00-33-28).png" alt="스토리보드 5">
+    <img src="Comp 1 (0-00-41-10).png" alt="스토리보드 6">
+    
+  </div>
+
+  <!-- 모달 팝업 -->
+  <div class="modal" id="videoModal">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <video id="promoVideo" src="포폴4.송다미-화장품 광고 최종본.mp4" controls></video>
+  </div>
+
+  <script>
+    const modal = document.getElementById('videoModal');
+    const video = document.getElementById('promoVideo');
+
+   
+  function openModal() {
+    modal.classList.add('active');
+    video.play();
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    video.pause();
+    video.currentTime = 0;
+  }
+
+  // 스토리보드로 스크롤 이동
+  function scrollToStoryboard() {
+    const storyboard = document.getElementById('storyboard');
+    storyboard.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function goBack() {
+    if (history.length > 1) {
+      history.back(); // 브라우저 기록이 있으면 이전 페이지
+    } else {
+      // 기록이 없으면 특정 페이지로 이동
+      window.location.href = 'index.html';
+    }
+  }
+  </script>
+</body>
+</html>
